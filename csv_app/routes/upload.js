@@ -1,19 +1,17 @@
 var express = require('express');
 var router = express.Router();
 var ejs = require('ejs');
-var bodyParser = require('body-parser');
-var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var formidable = require('formidable');
 
 
-router.post('/',urlencodedParser, function(req, res, next) {
+router.post('/', function(req, res, next) {
     var form = new formidable.IncomingForm();
+    form.uploadDir = "public/uploads";
     form.parse(req, function(err, fields, files) {
-        console.log(fields);
+        //res.send(JSON.stringify(files));
+        res.redirect('/processcsv' + "?filepath=" + files.upload.path)
     });
-    //console.log(req.params);
-    //console.log(req.body);
-    res.send('Got it: ');
+    //res.redirect('/processcsv')
 });
 
 module.exports = router;
