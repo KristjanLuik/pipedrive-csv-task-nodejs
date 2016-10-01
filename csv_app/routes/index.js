@@ -1,14 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var ejs = require('ejs');
-//var db = require('../bin/util/connect');
-var mysql      = require('mysql');
-var connection = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'pipe',
-    password : 'pipe',
-    database : 'pipenode'
-});
+var db = require('../bin/util/connect');
+
 function getUploadForm() {
   return '<form action="/upload" enctype="multipart/form-data" method="post">'+
          '<input type="date" name="date"><br>'+
@@ -21,16 +15,8 @@ function getUploadForm() {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+    console.log('connected as id ' + db.threadId);
 
-
-    connection.connect(function (err) {
-        if (err) {
-            console.error('error connecting: ' + err.stack);
-            return;
-        }
-
-        console.log('connected as id ' + connection.threadId);
-    });
   res.render('index', { title: 'Express', form: getUploadForm()});
 });
 

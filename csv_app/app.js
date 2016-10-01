@@ -11,6 +11,7 @@ var users = require('./routes/users');
 var search = require('./routes/search');
 var processcsv = require('./routes/processcsv');
 
+var setup = require('./bin/util/setup');
 var app = express();
 
 // view engine setup
