@@ -26,7 +26,7 @@ router.get('/:field/:string', function(req, res, next) {
     },
     {
       id: "3",
-      name: "asd",
+      name: "rida3",
       age: "234",
       address: "place",
       team: "kollane"

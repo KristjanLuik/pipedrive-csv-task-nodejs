@@ -1,26 +1,30 @@
 var app = angular.module("search", [])
-    .controller('CSVsearchCtrl', function ($scope) {
-        $scope.csvrows = [
-            {
-                id: "1",
-                name: "rida1",
-                age: "34",
-                address: "koht",
-                team: "roheline"
-            },
-            {
-                id: "2",
-                name: "rida2",
-                age: "45",
-                address: "asd",
-                team: "punane"
-            },
-            {
-                id: "3",
-                name: "asd",
-                age: "234",
-                address: "place",
-                team: "kollane"
-            }
-        ];
-    });
+    .factory('csvService', [
+        '$q',
+        '$rootScope',
+        '$http', function ($q, $rootScope, $http) {
+            var csvService = {};
+            csvService.query = function() {
+                var deferred = $q.defer();
+                $http.get('/api/asd/asd')
+                    .success(function(data, status, headers, config) {
+                        csvService.rows = data;
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        deferred.resolve(data);
+                    })
+                    .error(function(data, status, headers, config) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        deferred.reject(data);
+                    });
+                return deferred.promise;
+            };
+            return csvService;
+        }])
+    .controller('CSVsearchCtrl',['$scope', 'csvService', function ($scope, csvService) {
+        csvService.query().then(function (suc) {
+            $scope.csvrows = csvService.rows;
+        });
+
+    }]);
