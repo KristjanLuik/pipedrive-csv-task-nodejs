@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var upload = require('./routes/upload');
-var users = require('./routes/users');
+var api = require('./routes/api');
 var search = require('./routes/search');
 var processcsv = require('./routes/processcsv');
 
@@ -29,7 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/upload', upload);
-app.use('/users', users);
+app.use('/api', api);
 app.use('/search', search);
 app.use('/processcsv', processcsv);
 
