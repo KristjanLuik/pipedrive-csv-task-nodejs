@@ -6,14 +6,10 @@ var async = require("async");
 var csvParser = require('csv-parse');
 var db = require('../bin/util/connect');
 
-/* GET users listing. */
+
 router.get('/', function(req, res, next) {
     var asyncTasks = [];
-    console.log(req.query.filepath);
     var lines;
-    /* fs.readFile(req.query.filepath,function (err, data) {
-        //res.send('respond with processcsv size: ' + data);
-    });*/
     asyncTasks.push(function (callback) {
         fs.readFile(req.query.filepath, {
             encoding: 'utf-8'
@@ -43,7 +39,8 @@ router.get('/', function(req, res, next) {
     });
     async.parallel(asyncTasks, function(){
         // All tasks are done now
-        res.send('Imported: ' + lines.length);
+        //res.send('Imported: ' + lines.length);
+        res.redirect('/search');
     });
 
 

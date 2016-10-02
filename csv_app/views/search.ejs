@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html ng-app="search">
+<head>
+    <title></title>
+    <link rel="stylesheet" href="/stylesheets/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="/searchapp/Angapp.js"></script>
+</head>
+<body ng-controller="CSVsearchCtrl">
+
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <input type="text" ng-model="yourName" placeholder="Name">
+            <input type="text" ng-model="yourName" placeholder="Address">
+            <input type="text" ng-model="yourName" placeholder="Team">
+            <hr>
+            <table>
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Address</th>
+                    <th>Team</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="row in csvrows">
+                    <th>{{row.id}}</th>
+                    <th>{{row.name}}</th>
+                    <th>{{row.age}}</th>
+                    <th>{{row.address}}</th>
+                    <th>{{row.team}}</th>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+<script src="/javascripts/bootstrap.min.js"></script>
+</html>
