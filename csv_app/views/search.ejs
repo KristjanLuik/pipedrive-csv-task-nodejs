@@ -13,11 +13,11 @@
 <div class="container">
     <div class="panel panel-default">
         <div class="panel-body">
-            <input type="text" ng-model="yourName" placeholder="Name">
-            <input type="text" ng-model="yourName" placeholder="Address">
-            <input type="text" ng-model="yourName" placeholder="Team">
+            <input type="text" ng-model="name" placeholder="Name">
+            <input type="text" ng-model="adr" placeholder="Address">
+            <input type="text" ng-model="team" placeholder="Team">
             <hr>
-            <table>
+            <table class="table table-striped" >
                 <thead>
                 <tr>
                     <th>Id</th>
@@ -28,7 +28,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="row in csvrows">
+                <tr ng-repeat="row in csvrows | filter:{name:name}| filter:{address:adr}| filter:{team:team}">
                     <th>{{row.id}}</th>
                     <th>{{row.name}}</th>
                     <th>{{row.age}}</th>
