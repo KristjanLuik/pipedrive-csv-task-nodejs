@@ -15,8 +15,6 @@ function getUploadForm() {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    //console.log('connected as id ' + db.threadId);
-    //console.log(db.hello());
     res.render('index', { title: 'Express', form: getUploadForm()});
 });
 

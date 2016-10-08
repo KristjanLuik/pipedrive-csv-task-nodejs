@@ -27,14 +27,31 @@ router.get('/', function(req, res, next) {
                 } else {
                         lines = data;
                             for (var i = 0, len = lines.length; i < len; i++) {
-                                lines[i][3] = lines[i][3] + ' '+ lines[i][4];
-                                lines[i].splice(4,1);
-                                lines[i] = "'" + lines[i].join("','") + "'";
+                                
+                                if (typeof lines[i] == 'undefined') {
+                                    //Remove empty rows.
+                                    lines.splice(i,1);
+                                }else if (lines[i].length != 6) {
+                                    lines.splice(i,1);
+                                }else if (!lines[i][0] || !lines[i][1] || !lines[i][2] || !lines[i][3] || !lines[i][4]) {
+                                    lines.splice(i,1);
+                                }else {
+                                    lines[i][3] = lines[i][3] + ' '+ lines[i][4];
+                                    lines[i].splice(4,1);
+                                    lines[i] = "'" + lines[i].join("','") + "'";
+                                    if ((lines[i].match(/,/g) || []).length != 4) {
+                                        console.log('Ei vordu neli> ' + i);
+
+                                    }
+                                }
+
+
                                 //db('INSERT INTO `pipenode`.`csvs` (`Id`, `name`, `age`, `address`, `team`) VALUES ('+ lines[i] + ')');
-                                db.runquery('INSERT INTO `pipenode`.`csvs` (`Id`, `name`, `age`, `address`, `team`) VALUES ('+ lines[i] + ')');
+                                //db.runquery('INSERT INTO `pipenode`.`csvs` (`Id`, `name`, `age`, `address`, `team`) VALUES ('+ lines[i] + ')');
                                 //console.log(lines[i]);
                             }
-                           // db.bulkImport(lines,5);
+                            //console.log(lines);
+                            db.bulkImport(lines,10000);
                             callback();
                 }
 
@@ -44,7 +61,7 @@ router.get('/', function(req, res, next) {
     async.parallel(asyncTasks, function(){
         // All tasks are done now
         //res.send('Imported: ' + lines.length);
-        res.redirect('/search');
+       // res.redirect('/search');
     });
 
 

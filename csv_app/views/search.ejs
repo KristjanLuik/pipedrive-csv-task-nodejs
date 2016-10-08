@@ -17,6 +17,7 @@
             <input type="text" ng-model="adr" placeholder="Address">
             <input type="text" ng-model="team" placeholder="Team">
             <hr>
+            <btn class="btn" ng-click="loadMore()">Load more</btn>
             <table class="table table-striped" >
                 <thead>
                 <tr>
@@ -28,7 +29,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="row in csvrows | filter:{name:name}| filter:{address:adr}| filter:{team:team}">
+                <tr ng-repeat="row in csvrows | limitTo:totalDisplayed | filter:{name:name}| filter:{address:adr}| filter:{team:team}">
                     <th>{{row.Id}}</th>
                     <th>{{row.name}}</th>
                     <th>{{row.age}}</th>

@@ -23,6 +23,13 @@ var app = angular.module("search", [])
             return csvService;
         }])
     .controller('CSVsearchCtrl',['$scope', 'csvService', function ($scope, csvService) {
+
+        $scope.totalDisplayed = 20;
+
+        $scope.loadMore = function () {
+            $scope.totalDisplayed += 20;
+        };
+
         csvService.query().then(function (suc) {
             $scope.csvrows = JSON.parse(csvService.rows);
         });

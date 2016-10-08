@@ -10,7 +10,6 @@ router.post('/', function(req, res, next) {
     form.parse(req, function(err, fields, files) {
         res.redirect('/processcsv' + "?filepath=" + files.upload.path);
     });
-    //res.redirect('/processcsv')
 });
 
 module.exports = router;
