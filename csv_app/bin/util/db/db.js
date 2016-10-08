@@ -17,8 +17,32 @@ var db = {
 
     },
     
-    asyrequest: function () {
-
+    asyrequest: function (sql, callback) {
+        /*var asyncTasks = [];
+        asyncTasks.push(function (callback) {
+            dbconnection.query(sql, function(err, rows, fields) {
+                //connection.end(); // close the connection
+                if (err) {
+                    throw err;
+                }
+                callback(null,rows)
+            });
+        });
+        async.parallel(asyncTasks, function(err, result){
+            console.log('results');
+            return result[0];
+        });
+        */
+        var result;
+        dbconnection.query(sql, function(err, rows, fields) {
+            //connection.end(); // close the connection
+            if (err) {
+                throw err;
+            }
+            //result = rows;
+            callback(rows);
+        });
+        //return result;
     },
 
     /*
@@ -30,6 +54,13 @@ var db = {
         var temp = '';
         var times = Math.floor(data_array.length/amount);
         console.log('times: ' + times);
+        if (data_array.length < amount) {
+            //All fit in one iteration
+            times++;
+        }
+        if (data_array.length % amount != 0) {
+            // We are dealing with over or under even
+        }
         for (var i = 0; i < times; i++) {
             temp = '';
             temp += sql;
@@ -43,6 +74,10 @@ var db = {
                     temp +=')';
                     temp +=',';
                 }
+            }
+            //If uneven amount of data
+            if (data_array.length % amount != 0) {
+
             }
             //Execute db
             console.log(temp);

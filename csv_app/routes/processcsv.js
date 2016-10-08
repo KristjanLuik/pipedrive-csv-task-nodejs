@@ -4,7 +4,8 @@ var fs = require('fs');
 var csv = require('csv');
 var async = require("async");
 var csvParser = require('csv-parse');
-var db = require('../bin/util/connect');
+//var db = require('../bin/util/connect');
+var db = require('../bin/util/db/db');
 
 
 router.get('/', function(req, res, next) {
@@ -29,8 +30,11 @@ router.get('/', function(req, res, next) {
                                 lines[i][3] = lines[i][3] + ' '+ lines[i][4];
                                 lines[i].splice(4,1);
                                 lines[i] = "'" + lines[i].join("','") + "'";
-                                db('INSERT INTO `pipenode`.`csvs` (`Id`, `name`, `age`, `address`, `team`) VALUES ('+ lines[i] + ')');
+                                //db('INSERT INTO `pipenode`.`csvs` (`Id`, `name`, `age`, `address`, `team`) VALUES ('+ lines[i] + ')');
+                                db.runquery('INSERT INTO `pipenode`.`csvs` (`Id`, `name`, `age`, `address`, `team`) VALUES ('+ lines[i] + ')');
+                                //console.log(lines[i]);
                             }
+                           // db.bulkImport(lines,5);
                             callback();
                 }
 

@@ -24,7 +24,7 @@ var app = angular.module("search", [])
         }])
     .controller('CSVsearchCtrl',['$scope', 'csvService', function ($scope, csvService) {
         csvService.query().then(function (suc) {
-            $scope.csvrows = csvService.rows;
+            $scope.csvrows = JSON.parse(csvService.rows);
         });
 
     }]);

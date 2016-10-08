@@ -1,6 +1,6 @@
-var db = require('./connect');
+var db = require('./db/db');
 var database = {DB:'',Table: ''};
-db('CREATE DATABASE IF NOT EXISTS Pipenode',function (err, rows) {
+db.runquery('CREATE DATABASE IF NOT EXISTS Pipenode',function (err, rows) {
     if(!err){
         database.DB = 'ok';
     }else {
@@ -8,7 +8,7 @@ db('CREATE DATABASE IF NOT EXISTS Pipenode',function (err, rows) {
     }
 });
 
-db('TRUNCATE TABLE `csvs`',function (err, rows) {
+db.runquery('TRUNCATE TABLE `csvs`',function (err, rows) {
     if(!err){
         database.Table = 'ok';
     }else {
@@ -16,7 +16,7 @@ db('TRUNCATE TABLE `csvs`',function (err, rows) {
     }
 });
 
-db('CREATE TABLE IF NOT EXISTS `csvs`(' +
+db.runquery('CREATE TABLE IF NOT EXISTS `csvs`(' +
     'Id INT NOT NULL,' +
     'name VARCHAR(100) NOT NULL,' +
     'age INT NOT NULL,' +

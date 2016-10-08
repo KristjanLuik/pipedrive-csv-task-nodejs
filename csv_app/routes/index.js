@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var ejs = require('ejs');
-var db = require('../bin/util/connect');
+var db = require('../bin/util/db/db');
 
 function getUploadForm() {
   return '<form action="/upload" enctype="multipart/form-data" method="post">'+
@@ -15,9 +15,9 @@ function getUploadForm() {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    console.log('connected as id ' + db.threadId);
-
-  res.render('index', { title: 'Express', form: getUploadForm()});
+    //console.log('connected as id ' + db.threadId);
+    //console.log(db.hello());
+    res.render('index', { title: 'Express', form: getUploadForm()});
 });
 
 module.exports = router;
