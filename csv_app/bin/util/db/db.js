@@ -35,7 +35,8 @@ var db = {
     },
 
     bulkImport: function (data_array, amount, cb) {
-        var sql = "INSERT INTO `pipenode`.`csvs` (`Id`, `name`, `age`, `address`, `team`) VALUES ";
+        var database = process.env.DB_1_ENV_MYSQL_DATABASE ||'pipenode';
+        var sql = "INSERT INTO `"+ database +"`.`csvs` (`Id`, `name`, `age`, `address`, `team`) VALUES ";
         var temp = '';
         var times = Math.floor(data_array.length/amount);
         var over = false;

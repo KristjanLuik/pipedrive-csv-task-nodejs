@@ -4,9 +4,16 @@ var fs = require('fs');
 //var csv = require('csv');
 var async = require("async");
 var csvParser = require('csv-parse');
-//var db = require('../bin/util/connect');
+var mail = require("nodemailer").mail;
 var db = require('../bin/util/db/db');
 
+mail({
+    from: "Kiisu Tibu ✔ <kutsu@kiisutibu.com>", // sender address
+    to: "kristjanluik1@gmail.com", // list of receivers
+    subject: "Hello ✔", // Subject line
+    text: "Hello world ✔", // plaintext body
+    html: "<b>Hello world ✔</b>" // html body
+});
 
 router.get('/', function(req, res, next) {
     var start = new Date();
@@ -54,6 +61,9 @@ router.get('/', function(req, res, next) {
         });
     });
     async.parallel(asyncTasks, function(err, result){
+        console.log('req.query');
+        console.log(req.query.email);
+
         var end = new Date() - start;
         // All tasks are done now remove the CSV file
        if (err === 'ENOENT') {
@@ -64,13 +74,22 @@ router.get('/', function(req, res, next) {
             fs.unlink(req.query.filepath, function (err, res) {
             });
            console.info("Execution time: %dms", end);
+            //sendmail(req.query.email, "Execution time: ");
 
-            res.redirect('/search');
+           res.redirect('/search');
         }
 
     });
 
 
 });
-
+function sendmail(to, content) {
+    mail({
+        from: "CSV Stuff ✔ <pieman@place.com>", // sender address
+        to: to, // list of receivers
+        subject: "Hello ✔", // Subject line
+        text: content, // plaintext body
+        html: "<b>Hello world ✔</b>" // html body
+    });
+}
 module.exports = router;
