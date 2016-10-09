@@ -9,6 +9,7 @@ var db = require('../bin/util/db/db');
 
 
 router.get('/', function(req, res, next) {
+    var start = new Date();
     var asyncTasks = [];
     var lines;
     asyncTasks.push(function (callback) {
@@ -43,16 +44,17 @@ router.get('/', function(req, res, next) {
                                     lines[i] = "'" + lines[i].join("','") + "'";
                                 }
                             }
-                            //console.log(lines);
-                            db.bulkImport(lines,10000);
-                            callback();
+                            db.bulkImport(lines,10000, function () {
+                                callback();
+                            });
+
                 }
 
             });
         });
     });
     async.parallel(asyncTasks, function(err, result){
-
+        var end = new Date() - start;
         // All tasks are done now remove the CSV file
        if (err === 'ENOENT') {
             req.flash('info', 'No such file');
@@ -61,6 +63,8 @@ router.get('/', function(req, res, next) {
         }else if (typeof req.query.filepath != 'undefined') {
             fs.unlink(req.query.filepath, function (err, res) {
             });
+           console.info("Execution time: %dms", end);
+
             res.redirect('/search');
         }
 

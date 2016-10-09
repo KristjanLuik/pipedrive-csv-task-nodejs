@@ -34,7 +34,7 @@ var db = {
         //return result;
     },
 
-    bulkImport: function (data_array, amount) {
+    bulkImport: function (data_array, amount, cb) {
         var sql = "INSERT INTO `pipenode`.`csvs` (`Id`, `name`, `age`, `address`, `team`) VALUES ";
         var temp = '';
         var times = Math.floor(data_array.length/amount);
@@ -92,6 +92,7 @@ var db = {
 
         }
 
+        cb();
     }
 
 };
