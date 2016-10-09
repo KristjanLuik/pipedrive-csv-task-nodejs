@@ -1,9 +1,9 @@
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
-    host     : 'localhost',
+    host     : 'db',
     user     : 'pipe',
     password : 'pipe',
-    database : 'pipenode'
+    database : 'pipe'
 });
 connection.connect(function(err) {
     if (err !== null) {

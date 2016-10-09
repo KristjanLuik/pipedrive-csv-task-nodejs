@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var ejs = require('ejs');
+//var ejs = require('ejs');
 var db = require('../bin/util/db/db');
 
 function getUploadForm() {
