@@ -20,6 +20,8 @@
     "formidable": "1.0.17",
     "csv-parse": "1.1.7",
     "split": "1.0.0",
-    "async": "2.0.1"
+    "async": "2.0.1",
+    "express-session": "1.14.1",
+    "connect-flash": "0.1.1"
   }
 }

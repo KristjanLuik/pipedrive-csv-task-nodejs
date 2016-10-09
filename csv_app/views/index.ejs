@@ -2,14 +2,13 @@
 <html>
 <head>
     <title></title>
-    <link rel="stylesheet" href="/stylesheets/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
-    <link rel="stylesheet" href="/stylesheets/style.css">
+    <% include partial/header.ejs %>
 </head>
 <body>
 <div class="container">
-    <div class="panel panel-default">
+    <% include partial/mainmenue.ejs %>
 
+    <div class="panel panel-default">
         <% include partial/footer %>
         <div class="panel-body">
     <%- form %>

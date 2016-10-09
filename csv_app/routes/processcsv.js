@@ -16,7 +16,9 @@ router.get('/', function(req, res, next) {
             encoding: 'utf-8'
         }, function(err, csvData) {
             if (err) {
-                console.log(err);
+                if (err.code === 'ENOENT') {
+                    callback('ENOENT',null);
+                }
             }
 
             csvParser(csvData, {
@@ -39,16 +41,7 @@ router.get('/', function(req, res, next) {
                                     lines[i][3] = lines[i][3] + ' '+ lines[i][4];
                                     lines[i].splice(4,1);
                                     lines[i] = "'" + lines[i].join("','") + "'";
-                                    if ((lines[i].match(/,/g) || []).length != 4) {
-                                        console.log('Ei vordu neli> ' + i);
-
-                                    }
                                 }
-
-
-                                //db('INSERT INTO `pipenode`.`csvs` (`Id`, `name`, `age`, `address`, `team`) VALUES ('+ lines[i] + ')');
-                                //db.runquery('INSERT INTO `pipenode`.`csvs` (`Id`, `name`, `age`, `address`, `team`) VALUES ('+ lines[i] + ')');
-                                //console.log(lines[i]);
                             }
                             //console.log(lines);
                             db.bulkImport(lines,10000);
@@ -58,10 +51,19 @@ router.get('/', function(req, res, next) {
             });
         });
     });
-    async.parallel(asyncTasks, function(){
-        // All tasks are done now
-        //res.send('Imported: ' + lines.length);
-       // res.redirect('/search');
+    async.parallel(asyncTasks, function(err, result){
+
+        // All tasks are done now remove the CSV file
+       if (err === 'ENOENT') {
+            req.flash('info', 'No such file');
+            //res.redirect('/search', {messages: req.flash('info')});
+            res.render('index', {messages: req.flash('info')});
+        }else if (typeof req.query.filepath != 'undefined') {
+            fs.unlink(req.query.filepath, function (err, res) {
+            });
+            res.redirect('/search');
+        }
+
     });
 
 

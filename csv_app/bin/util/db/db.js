@@ -23,21 +23,6 @@ var db = {
     },
     
     asyrequest: function (sql, callback) {
-        /*var asyncTasks = [];
-        asyncTasks.push(function (callback) {
-            dbconnection.query(sql, function(err, rows, fields) {
-                //connection.end(); // close the connection
-                if (err) {
-                    throw err;
-                }
-                callback(null,rows)
-            });
-        });
-        async.parallel(asyncTasks, function(err, result){
-            console.log('results');
-            return result[0];
-        });
-        */
         dbconnection.query(sql, function(err, rows, fields) {
             //connection.end(); // close the connection
             if (err) {
@@ -49,16 +34,11 @@ var db = {
         //return result;
     },
 
-    /*
-    *
-    *
-    * */
     bulkImport: function (data_array, amount) {
         var sql = "INSERT INTO `pipenode`.`csvs` (`Id`, `name`, `age`, `address`, `team`) VALUES ";
         var temp = '';
         var times = Math.floor(data_array.length/amount);
         var over = false;
-        console.log('times: ' + times);
         if (data_array.length < amount) {
             //All fit in one iteration
             times++;
@@ -113,8 +93,6 @@ var db = {
         }
 
     }
-
-    
 
 };
 
