@@ -24,8 +24,9 @@ var db = {
     
     asyrequest: function (sql, callback) {
         dbconnection.query(sql, function(err, rows, fields) {
-            //connection.end(); // close the connection
+            dbconnection.end(); // close the connection
             if (err) {
+                console.log(err);
                 throw err;
             }
             //result = rows;

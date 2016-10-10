@@ -1,6 +1,7 @@
 var db = require('./db/db');
 var database = {DB:'',Table: ''};
-db.runquery('CREATE DATABASE IF NOT EXISTS Pipenode',function (err, rows) {
+var database_env = process.env.DB_1_ENV_MYSQL_DATABASE ||'pipenode';
+db.runquery('CREATE DATABASE IF NOT EXISTS '+ database_env ,function (err, rows) {
     if(!err){
         database.DB = 'ok';
     }else {
