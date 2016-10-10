@@ -23,5 +23,5 @@ ADD ./csv_app /var/www/app
 #USER app
 WORKDIR $HOME/
 EXPOSE 3000
-#CMD npm start
-CMD tail -F -n0 /etc/hosts
+CMD npm start
+#CMD tail -F -n0 /etc/hosts
