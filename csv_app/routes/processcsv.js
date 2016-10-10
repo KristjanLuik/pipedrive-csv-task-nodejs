@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var fs = require('fs');
-//var csv = require('csv');
+var util =  require('util');
 var async = require("async");
 var csvParser = require('csv-parse');
 var mail = require("nodemailer").mail;
@@ -53,7 +53,8 @@ router.get('/', function(req, res, next) {
         });
     });
     async.parallel(asyncTasks, function(err, result){
-        var time = `Execution time: ${new Date() - start}ms`;
+        //var time = `Execution time: ${new Date() - start}ms`;
+        var content = util.format("Importer execution time: %dms and date the form was submited: %s",new Date() - start,req.query.date);
         // All tasks are done now remove the CSV file
        if (err === 'ENOENT') {
             req.flash('info', 'No such file');
@@ -62,8 +63,7 @@ router.get('/', function(req, res, next) {
         }else if (typeof req.query.filepath != 'undefined') {
             fs.unlink(req.query.filepath, function (err, res) {
             });
-           console.info("Execution time: %dms", end);
-            sendmail(req.query.email, time);
+            sendmail(req.query.email, content);
 
            res.redirect('/search');
         }
