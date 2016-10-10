@@ -26,7 +26,6 @@ var db = {
         dbconnection.query(sql, function(err, rows, fields) {
             dbconnection.end(); // close the connection
             if (err) {
-                console.log(err);
                 throw err;
             }
             //result = rows;

@@ -1,8 +1,7 @@
 web:
   build:  .
   environment:
-    XDEBUG_CONFIG: "remote_host=192.168.5.77"
-    PHP_IDE_CONFIG: "serverName=my.local"
+    DB_HOSTNAME: "db"
   ports:
     - "80:3000"
   links:
