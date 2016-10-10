@@ -23,14 +23,19 @@ var db = {
     },
     
     asyrequest: function (sql, callback) {
-        dbconnection.query(sql, function(err, rows, fields) {
-            dbconnection.end(); // close the connection
+        try {
+        dbconnection.query(sql, function (err, rows, fields) {
+           // dbconnection.end(); // close  the connection
             if (err) {
-                throw err;
+                // throw err;
+                console.log(err);
             }
             //result = rows;
             callback(rows);
         });
+    } catch (e){
+        console.log(e);
+        }
         //return result;
     },
 
