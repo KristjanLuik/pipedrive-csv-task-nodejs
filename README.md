@@ -21,3 +21,12 @@ Getting docker-machine default IP:
 ```
 docker-machine ip default
 ```
+
+
+## For those who don't like virtual enviorments
+Run in a shell
+```
+cd csv_app
+npm install
+DB_HOSTNAME=<your db host> DB_1_ENV_MYSQL_USER=<your db username> PIPEDRIVECSVTASKNODEJS_DB_1_ENV_MYSQL_PASSWORD=<your user password> DB_1_ENV_MYSQL_DATABASE=<db name> node ./csv_app/bin/www
+```
