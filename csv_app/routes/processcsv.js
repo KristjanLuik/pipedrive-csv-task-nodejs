@@ -11,7 +11,11 @@ router.get('/', function(req, res, next) {
     var start = new Date();
     var asyncTasks = [];
     var lines;
+
     asyncTasks.push(function (callback) {
+        if (typeof req.query.filepath == 'undefined') {
+            callback('ENOENT',null);
+        }
         fs.readFile(req.query.filepath, {
             encoding: 'utf-8'
         }, function(err, csvData) {
@@ -29,7 +33,7 @@ router.get('/', function(req, res, next) {
                 } else {
                         lines = data;
                             for (var i = 0, len = lines.length; i < len; i++) {
-                                
+
                                 if (typeof lines[i] == 'undefined') {
                                     //Remove empty rows.
                                     lines.splice(i,1);
@@ -57,10 +61,12 @@ router.get('/', function(req, res, next) {
         var content = util.format("Importer execution time: %dms and date the form was submited: %s",new Date() - start,req.query.date);
         // All tasks are done now remove the CSV file
        if (err === 'ENOENT') {
-            req.flash('info', 'No such file');
+           console.log('olen erroris.');
+           //req.flash('info', 'No such file');
             //res.redirect('/search', {messages: req.flash('info')});
-            res.render('index', {messages: req.flash('info')});
-        }else if (typeof req.query.filepath != 'undefined') {
+            //res.render('index');
+            res.redirect('/');
+        } else {
             fs.unlink(req.query.filepath, function (err, res) {
             });
             sendmail(req.query.email, content);
